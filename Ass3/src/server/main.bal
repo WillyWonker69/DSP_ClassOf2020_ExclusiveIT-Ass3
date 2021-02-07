@@ -94,6 +94,46 @@ service graphql:Service /Proposal_API on new graphql:Listener(9090) {
 
 }
 
+service graphql:Service /Thesis_API on new graphql:Listener(9090) {
+
+    resource function post registration(Record Thesis) returns string {
+        
+        let response;
+        
+        kafka:ProducerError? sendRes = kafkaProd->sendProducerRecord({topic: "studentApplicationManagement",
+                                value: msg.toBytes() });
+        if (sendRes is error) {
+            return "An error occurred while sending a response...";
+        }
+
+        kafka:ProducerError? flushRes = kafkaProd->flushRecords();
+        if (flushRes is error) {
+            return "An error occurred while flushing the records...";
+        }
+
+        return "Acknowledging Student Statues...";
+    }
+
+    resource function post report(Record Thesis, Record FIE) returns string {
+        
+        let response;
+        
+        kafka:ProducerError? sendRes = kafkaProd->sendProducerRecord({topic: "studentApplicationManagement",
+                                value: msg.toBytes() });
+        if (sendRes is error) {
+            return "An error occurred while sending a response...";
+        }
+
+        kafka:ProducerError? flushRes = kafkaProd->flushRecords();
+        if (flushRes is error) {
+            return "An error occurred while flushing the records...";
+        }
+
+        return "Acknowledging Student Statues...";
+    }
+
+}
+
 
 public type Student record {|
     string Fullname="";
@@ -116,5 +156,11 @@ public type proposal record {|
 public type HOD record {|
     string HOD_ID  = "";
     string HOD_FullName = "";
+    
+|};
+
+public type FIE record {|
+    string FIE_ID  = "";
+    string FIE_FullName = "";
     
 |};

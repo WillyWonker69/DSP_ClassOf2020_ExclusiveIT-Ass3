@@ -11,10 +11,12 @@ retryCount:3
 kafka:Producer kafkaProducer = new (prodConfig);
 
 public function main() {
-   Student value = {
-
-   }
-   
+   Student s1 = {
+    Fullname :"Willy Wonker", 
+    StudentNumber : "219070318",  
+    
+   };
+   apply(s1);
 }
 
 
