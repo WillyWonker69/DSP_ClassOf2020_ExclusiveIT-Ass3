@@ -65,6 +65,7 @@ service graphql:Service /Proposal_API on new graphql:Listener(9090) {
         if (sendRes is error) {
             return "An error occurred while sending a response...";
         }
+
         kafka:ProducerError? flushRes = kafkaProd->flushRecords();
         if (flushRes is error) {
             return "An error occurred while flushing the records...";
